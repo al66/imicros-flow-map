@@ -1,14 +1,6 @@
-# imicros-flow-map
-Transform JSON to JSON
+const map = require("../lib/map");
+const util = require("util");
 
-## Installation
-```
-$ npm install imicros-flow-map --save
-```
-
-## Usage
-```js
-// JSON template
 const template = {
     "This is a key": "this is a string value",
     "numbers": {
@@ -36,7 +28,6 @@ const template = {
     "missing value": "{{any}}"
 };
 
-// data
 const data = {
     keys: {
         a: "test"
@@ -54,28 +45,6 @@ const data = {
 };
 
 let result = map(template, data);
-/*
-{
-  'This is a key': 'this is a string value',
-  numbers: { template: 10, data: 10 },
-  booleans: { template: false, data: true },
-  deep: {
-    'level A': {
-      'level B': {
-        x: [ 1, 2, 3, 4, 5 ],
-        y: [ 'hello', 'world' ],
-        z: [ { a: 1, b: 'v', c: '3' }, { a: 2, b: 's', c: '4' } ]
-      }
-    },
-    test: 'deep key'
-  },
-  array: [ 10, [ 1, 2, 3, 4, 5 ] ],
-  path: { a: 'test' },
-  test: 'any',
-  '{{keys.b}}': 'missing key',
-  'missing value': '{{any}}'
-}
-*/
-
-```
-
+console.log(util.inspect(template, false, 99, true));
+console.log(util.inspect(data, false, 99, true));
+console.log(util.inspect(result, false, 99, true));
