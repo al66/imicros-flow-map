@@ -8,6 +8,8 @@ $ npm install imicros-flow-map --save
 
 ## Usage
 ```js
+const { map } = require("imicros-flow-map");
+
 // JSON template
 const template = {
     "This is a key": "this is a string value",
