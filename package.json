@@ -1,12 +1,13 @@
 {
   "name": "imicros-flow-map",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Andreas Leinen <andreas.leinen@imicros.de> (www.imicros.de)",
   "license": "MIT",
   "description": "JSON mapper for usage in imicros-flow",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage --no-cache"
+    "test": "jest --coverage --no-cache",
+    "test-json": "jest test/jsonMap.spec.js --no-cache"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -32,7 +33,7 @@
     "transform"
   ],
   "devDependencies": {
-    "jest": "^26.6.3"
-  },
-  "dependencies": {}
+    "jest": "^27.5.1",
+    "moleculer": "^0.14.19"
+  }
 }

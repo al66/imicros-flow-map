@@ -4,5 +4,6 @@
 "use strict";
 
 module.exports = {
-    map: require("./lib/map")
+    map: require("./lib/map"),
+    JsonMap: require("./lib/jsonMap")
 };
