@@ -85,9 +85,7 @@ describe("Test template service", () => {
                 }
             };
             let internal = Buffer.from(opts.meta.acl.ownerId + "~" + params.name).toString("base64");
-            globalStore[internal] =  {
-                "{{a}}": "{{value}}"
-            };
+            globalStore[internal] =  "{ a: value }";
 
             return broker.call("jsonMap.map", params, opts).then(res => {
                 expect(res).toBeDefined();
@@ -100,9 +98,7 @@ describe("Test template service", () => {
         
         it("it should render a simple map from parameter", async () => {
             let params = {
-                template: {
-                    "{{a}}": "{{value}}"
-                },
+                template: "{ a: value }",
                 data:  {
                     a: "key A",
                     value: "B"
@@ -130,12 +126,7 @@ describe("Test template service", () => {
                 }
             };
             let internal = Buffer.from(opts.meta.acl.ownerId + "~" + params.name).toString("base64");
-            globalStore[internal] =  {
-                "{{a}}": 1,
-                "key {{b}}": "String",
-                "{{keys.c}}": [1,2,3,4],
-                "key {{keys.d}}": ["1","2","3","4"]
-            };
+            globalStore[internal] =  "{ a: 1, 'key ' & b: 'String', keys.c: [1,2,3,4], 'key ' & keys.d: ['1','2','3','4'] }";
 
             return broker.call("jsonMap.map", params, opts).then(res => {
                 expect(res).toBeDefined();
@@ -148,73 +139,6 @@ describe("Test template service", () => {
             });
                 
         });
-        
-        /*
-        it("it should render template with deep data structure", async () => {
-            let params = {
-                name: "path/to/template/hello.tpl",
-                data: { name: { lastName: "my friend" } }
-            };
-            let internal = Buffer.from(opts.meta.acl.ownerId + "~" + params.name).toString("base64");
-            globalStore[internal] = { template: "Hello, {{ name.lastName }}!" };
-
-            return broker.call("template.render", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual("Hello, my friend!");
-            });
-                
-        });
-        
-        it("it should return null due to missing object", async () => {
-            let params = {
-                name: "path/to/template/missing.tpl",
-                data: { name: "my friend" }
-            };
-            return broker.call("template.render", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(null);
-            });
-                
-        });
-        
-        it("it should return null due to unvalid template", async () => {
-            let params = {
-                name: "path/to/template/unvalid.tpl",
-                data: { name: "my friend" }
-            };
-            let internal = Buffer.from(opts.meta.acl.ownerId + "~" + params.name).toString("base64");
-            globalStore[internal] = { template: "Hello, {{ name.lastName !" };  // missing closing brackets...
-          
-            return broker.call("template.render", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(null);
-            });
-                
-        });
-        
-        it("it should render an given template", async () => {
-            let params = {
-                template: "Hello, {{ name }}!",
-                data: { name: "my best friend" }
-            };
-            return broker.call("template.render", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual("Hello, my best friend!");
-            });
-                
-        });
-        
-        it("it should return null due to missing template", async () => {
-            let params = {
-                data: { name: "my friend" }
-            };
-            return broker.call("template.render", params, opts).then(res => {
-                expect(res).toBeDefined();
-                expect(res).toEqual(null);
-            });
-                
-        });
-        */
         
     });
         
