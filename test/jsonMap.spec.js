@@ -10,7 +10,7 @@ const globalStore ={};
 // mock imicros-minio mixin
 const Store = (/*options*/) => { return {
     methods: {
-        async putObject ({ ctx = null, objectName = null, value = null } = {}) {
+        async putString ({ ctx = null, objectName = null, value = null } = {}) {
             if ( !ctx || !objectName ) return false;
             
             let internal = Buffer.from(ctx.meta.acl.ownerId + "~" + objectName).toString("base64");
@@ -18,7 +18,7 @@ const Store = (/*options*/) => { return {
             this.store[internal] = value;
             return true;
         },
-        async getObject ({ ctx = null, objectName }) {
+        async getString ({ ctx = null, objectName }) {
             if ( !ctx || !objectName ) throw new Error("missing parameter");
 
             let internal = Buffer.from(ctx.meta.acl.ownerId + "~" + objectName).toString("base64");
