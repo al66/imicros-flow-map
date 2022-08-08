@@ -139,6 +139,47 @@ describe("Test template service", () => {
             });
                 
         });
+
+        it("it should render a complex map from parameter", async () => {
+            let params = {
+                template: `{
+                    a: x,
+                    "deep": {
+                        "b": sub.y
+                    }
+                }`,
+                data:  {
+                    "a": "Key A",
+                    "x": "value x",
+                    "sub": {
+                        "y": "value y"
+                    }
+                }
+            };
+            return broker.call("jsonMap.map", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res).toEqual({
+                    "Key A": "value x",
+                    deep: {
+                        "b": "value y"
+                    }
+                });
+            });
+                
+        });
+        
+        it("it should create a uuid", async () => {
+            let params = {
+                template: `{ 'id': $uuid() }`,
+                data:  {}
+            };
+            return broker.call("jsonMap.map", params, opts).then(res => {
+                expect(res).toBeDefined();
+                expect(res.id).toBeDefined();
+                expect(res.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+            });
+                
+        });
         
     });
         
